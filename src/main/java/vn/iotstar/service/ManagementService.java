@@ -40,11 +40,12 @@ import vn.iotstar.security.AppPrincipal;
         return form;
     }
     @Transactional public void saveUser(Long id, UserForm form) {
-        User user=id==null ? new User() : users.findById(id).orElseThrow();
+        User user=id==null ? userMapper.toEntity(form) : users.findById(id).orElseThrow();
         if (id==null && (users.existsByUsernameIgnoreCase(form.getUsername()) || users.existsByEmailIgnoreCase(form.getEmail())))
             throw new IllegalArgumentException("Username or email already exists");
-        user.setUsername(form.getUsername().trim()); user.setEmail(form.getEmail().trim().toLowerCase());
-        user.setFullName(form.getFullName().trim()); user.setImageUrl(form.getImageUrl()); user.setEnabled(form.isEnabled());
+        if (id!=null) userMapper.updateEntity(form,user);
+        user.setUsername(user.getUsername().trim()); user.setEmail(user.getEmail().trim().toLowerCase());
+        user.setFullName(user.getFullName().trim());
         user.setRole(roles.findByName(form.getRoleName()).orElseThrow());
         if (id==null && (form.getPassword()==null || form.getPassword().length()<8))
             throw new IllegalArgumentException("Password must have at least 8 characters");
@@ -67,10 +68,11 @@ import vn.iotstar.security.AppPrincipal;
         return productForm(id);
     }
     @Transactional public void saveProduct(Long id, ProductForm form, MultipartFile image, AppPrincipal principal) throws IOException {
-        Product p=id==null ? new Product() : products.findById(id).orElseThrow();
+        Product p=id==null ? productMapper.toEntity(form) : products.findById(id).orElseThrow();
         if (id==null) p.setUser(users.findById(principal.id()).orElseThrow());
         else assertMayEdit(p, principal);
-        p.setName(form.getName().trim()); p.setDescription(form.getDescription()); p.setPrice(form.getPrice());
+        if (id!=null) productMapper.updateEntity(form,p);
+        p.setName(p.getName().trim());
         ImageService.Upload upload=images.upload(image);
         if (upload!=null) { images.delete(p.getImagePublicId()); p.setImageUrl(upload.url()); p.setImagePublicId(upload.publicId()); }
         products.save(p);

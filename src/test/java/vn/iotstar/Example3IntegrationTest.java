@@ -48,4 +48,14 @@ import org.springframework.web.context.WebApplicationContext;
         mvc.perform(post("/verify-otp").with(csrf()).param("email","newstudent@example.com")
                 .param("code","000000")).andExpect(status().isOk());
     }
+    @Test void userCanCreateAndSearchOwnProduct() throws Exception {
+        var login=mvc.perform(post("/login").with(csrf()).param("username","user01")
+                .param("password","ChangeMe123!")).andExpect(status().is3xxRedirection()).andReturn();
+        var session=(org.springframework.mock.web.MockHttpSession)login.getRequest().getSession();
+        mvc.perform(post("/products/save").session(session).with(csrf()).param("name","Notebook Sample")
+                .param("description","Test product").param("price","125.50"))
+                .andExpect(redirectedUrl("/products"));
+        mvc.perform(get("/products").session(session).param("keyword","Notebook"))
+                .andExpect(status().isOk()).andExpect(content().string(org.hamcrest.Matchers.containsString("Notebook Sample")));
+    }
 }
