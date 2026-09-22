@@ -1,0 +1,5 @@
+<!doctype html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><main class="auth-card"><h1>Spring Security · Ví dụ <span th:text="${example}">3</span></h1><h2>Đăng nhập</h2>
+<p class="error" th:if="${param.error}">Thông tin đăng nhập không đúng hoặc tài khoản chưa được kích hoạt.</p><p class="success" th:if="${param.logout}">Đã đăng xuất.</p><p class="success" th:if="${param.verified}">Xác thực thành công.</p><p class="success" th:if="${param.reset}">Đổi mật khẩu thành công.</p>
+<form th:action="@{/login}" method="post"><label th:text="${example == 1 ? 'Email' : 'Username hoặc email'}">Username hoặc email</label><input th:name="${example == 1 ? 'email' : 'username'}" required autofocus><label>Mật khẩu</label><input name="password" type="password" required><button class="button" type="submit">Đăng nhập</button></form>
+<p th:if="${example == 3}"><a th:href="@{/register}">Đăng ký</a> · <a th:href="@{/forgot-password}">Quên mật khẩu?</a></p></main></body></html>

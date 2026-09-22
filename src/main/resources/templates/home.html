@@ -1,0 +1,6 @@
+<!doctype html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{layouts/layout :: head('Trang chủ')}"></head><body><header th:replace="~{fragments/header :: header}"></header><main class="container">
+<h1>Ví dụ <span th:text="${example}">3</span></h1><p>Xin chào <strong th:text="${principal.fullName}">User</strong>.</p>
+<div th:if="${example == 1}" class="card"><h2>Login bằng email</h2><p>Thông tin User và Role hiển thị trên header bằng Thymeleaf thuần, không cần layout dialect.</p></div>
+<div th:if="${example == 2}" class="card"><h2>Custom login</h2><p>Đăng nhập bằng username hoặc email. Header hiển thị fullname, email, role và ảnh nếu có.</p></div>
+<div th:if="${example == 3}" class="cards"><div class="card"><h2>Người dùng</h2><strong th:text="${userCount}">0</strong></div><div class="card"><h2>Sản phẩm</h2><strong th:text="${productCount}">0</strong></div></div>
+</main></body></html>

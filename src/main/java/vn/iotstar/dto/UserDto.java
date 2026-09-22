@@ -1,0 +1,12 @@
+package vn.iotstar.dto;
+import lombok.Data;
+@Data public class UserDto {
+    private Long id;
+    private String username;
+    private String email;
+    private String fullName;
+    private String imageUrl;
+    private String roleName;
+    private boolean enabled;
+    private long productCount;
+}

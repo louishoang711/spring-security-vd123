@@ -1,0 +1,5 @@
+<!doctype html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><body>
+<header th:fragment="header" class="topbar"><a th:href="@{/}">Security VD123</a><nav><a th:if="${example == 3}" th:href="@{/products}">Products</a><a th:if="${example == 3 and principal.role == 'ROLE_ADMIN'}" th:href="@{/users}">Users</a></nav>
+<div class="account" th:if="${example == 1}"><span th:text="${principal.email}">email</span><span th:text="${principal.fullName}">name</span><span th:text="${principal.role}">role</span></div>
+<div class="account" th:unless="${example == 1}" sec:authorize="isAuthenticated()"><img th:if="${#authentication.principal.imageUrl != null}" th:src="${#authentication.principal.imageUrl}" alt="Avatar" width="36" height="36"><span th:text="${#authentication.principal.fullName}">name</span><span th:text="${#authentication.principal.email}">email</span><span th:text="${#authentication.principal.role}">role</span></div>
+<form th:action="@{/logout}" method="post"><button type="submit">Đăng xuất</button></form></header></body></html>

@@ -1,0 +1,10 @@
+package vn.iotstar.mapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.iotstar.dto.UserDto;
+import vn.iotstar.entity.User;
+@Mapper(componentModel = "spring") public interface UserMapper {
+    @Mapping(target = "roleName", source = "role.name")
+    @Mapping(target = "productCount", ignore = true)
+    UserDto toDto(User user);
+}
