@@ -13,7 +13,7 @@ Dự án Spring Boot 4.1.1, Spring Security 7, Thymeleaf, MapStruct. Ba ví dụ
 Yêu cầu JDK 25 và Maven 3.9+. Dự án dùng H2 trong bộ nhớ theo mặc định; không cần cài SQL Server để thử.
 
 ```powershell
-cd 'E:\workspace springtool\spring-security-vd123'
+cd spring-security-vd123
 .\mvnw.cmd spring-boot:run
 ```
 
